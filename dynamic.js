@@ -117,8 +117,8 @@ function clicked(elem) {
   else if (mode == "remove") {
     post_remove(
       parent.dataset.id,
-      (xhr) => {
-        if (xhr.status == 200) {
+      (status) => {
+        if (status == 200) {
           parent.remove();
         }
         else {
@@ -206,8 +206,8 @@ function submitInfo() {
         "iconType": iconType.value,
         "icon": icon
       },
-      (xhr) => {
-        if (xhr.status == 200) {
+      (status) => {
+        if (status == 200) {
           hook.dataset.url = url.value;
           hook.replaceChild(
             createIcon(
@@ -298,8 +298,8 @@ function closeMove() {
         "x": parseInt(hook.style.left),
         "y": parseInt(hook.style.top)
       },
-      (xhr) => {
-        if (xhr.status != 200) {
+      (status) => {
+        if (status != 200) {
           alert("Failed to update");
         }
       }
