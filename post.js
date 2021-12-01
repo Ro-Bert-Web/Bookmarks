@@ -8,7 +8,7 @@ function save() {
 function post_create(url, iconType, icon, callback) {
     let id = 0;
     for (let i = 0; i < elements.length; i++)
-        if (id < elements[i].id)
+        if (id =< elements[i].id)
             id = elements[i].id + 1;
 
     let element = {
