@@ -35,3 +35,6 @@ div.centeredInner {
   text-align: left;
 }
 
+.dragging {
+  border: 4px solid grey;
+}

@@ -149,6 +149,7 @@ function clicked(elem) {
   else if (mode == "move") {
     if (hook == null) {
       hook = parent;
+      hook.classList.add("dragging")
       interval = setInterval(move, 10);
     }
     else if (parent == hook) {
@@ -304,6 +305,7 @@ function closeMove() {
         }
       }
     );
+    hook.classList.remove("dragging")
     hook = null;
     clearInterval(interval);
   }
