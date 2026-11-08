@@ -1,9 +1,3 @@
-let cleanUp = document.getElementsByClassName("cleanUp");
-for (let i = 0; i < cleanUp.length; i++) {
-  cleanUp[i].remove();
-}
-
-
 
 let options = document.getElementById("menuOptions");
 
