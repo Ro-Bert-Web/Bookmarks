@@ -15,6 +15,7 @@ let iconImage = document.getElementById("iconImage").children[1];
 
 let mode = "default";
 let square = true;
+select("square");
 
 let mouseX;
 let mouseY;
@@ -52,51 +53,52 @@ function menuClick(m) {
     else {
       options.hidden = true;
       closeMode();
-      mode = "default";
     }
   }
   else if (m == "add") {
     if (mode == "add") {
-      closeAdd();
-      mode = "default";
+      closeMode();
     }
     else {
       closeMode();
-      mode = "add";
-      infoForm.style.display = "block";
+      openModeAdd();
     }
   }
   else if (m == "remove") {
     if (mode == "remove") {
-      mode = "default";
+      closeMode();
     }
     else {
       closeMode();
-      mode = "remove";
+      openModeRemove();
     }
   }
   else if (m == "edit") {
     if (mode == "edit") {
-      closeEdit();
-      mode = "default";
+      closeMode();
     }
     else {
       closeMode();
-      mode = "edit";
+      openModeEdit()
     }
   }
   else if (m == "move") {
     if (mode == "move") {
-      closeMove();
-      mode = "default";
+      closeMode();
     }
     else {
       closeMode();
-      mode = "move";
+      openModeMove()
     }
   }
   else if (m == "square") {
     square ^= true;
+    if (square) {
+      select("square");
+    }
+    else {
+      unselect("square");
+    }
   }
 }
 
@@ -147,7 +149,7 @@ function clicked(elem) {
       interval = setInterval(move, 10);
     }
     else if (parent == hook) {
-      closeMove();
+      closeModeMove();
     }
   }
 }
@@ -183,10 +185,8 @@ function submitInfo() {
             iconType.value,
             icon
           )
-          closeAdd();
-          mode = "move";
-          hook = elem;
-          interval = setInterval(move, 10);
+          closeMode();
+          openModeMove(elem)
         }
         else {
           alert("error");
@@ -251,42 +251,76 @@ function move() {
 
 
 
+function select(m) {
+  document.getElementById(`${m}-icon`).classList.add("selected");
+}
+
+function unselect(m) {
+  document.getElementById(`${m}-icon`).classList.remove("selected");
+}
+
 function closeMode() {
   if (mode == "add") {
-    closeAdd();
+    closeModeAdd();
   }
   else if (mode == "edit") {
-    closeEdit();
+    closeModeEdit();
+  }
+  else if (mode == "remove") {
+    closeModeRemove();
   }
   else if (mode == "move") {
-    closeMove();
+    closeModeMove();
   }
 }
 
-function closeAdd() {
-  closeInfoForm();
+function openModeAdd() {
+  select("add");
+  infoForm.style.display = "block";
+  mode = "add";
 }
 
-function closeEdit() {
+function closeModeAdd() {
+  unselect("add");
+  closeInfoForm();
+  mode = "default";
+}
+
+function openModeEdit() {
+  select("edit");
+  mode = "edit";
+}
+
+function closeModeEdit() {
+  unselect("edit");
   hook = null;
   clearInterval(interval);
   closeInfoForm();
+  mode = "default";
 }
 
-function closeInfoForm() {
-  infoForm.style.display = "none";
-  url.value = "";
-
-  iconType.value = "";
-
-  iconTextDiv.hidden = true;
-  iconText.value = "";
-
-  iconImageDiv.hidden = true;
-  iconImage.value = "";
+function openModeRemove() {
+  select("remove");
+  mode = "remove";
 }
 
-function closeMove() {
+function closeModeRemove() {
+  unselect("remove");
+  mode = "default"
+}
+
+function openModeMove(elem = null) {
+  select("move");
+  mode = "move";
+
+  if (elem != null) {
+    hook = elem;
+    interval = setInterval(move, 10);
+  }
+}
+
+function closeModeMove() {
+  unselect("move");
   if (hook != null) {
     post_update({
         "id": hook.dataset.id,
@@ -301,6 +335,20 @@ function closeMove() {
     );
     hook.classList.remove("dragging")
     hook = null;
-    clearInterval(interval);
   }
+  clearInterval(interval);
+  mode = "default";
+}
+
+function closeInfoForm() {
+  infoForm.style.display = "none";
+  url.value = "";
+
+  iconType.value = "";
+
+  iconTextDiv.hidden = true;
+  iconText.value = "";
+
+  iconImageDiv.hidden = true;
+  iconImage.value = "";
 }

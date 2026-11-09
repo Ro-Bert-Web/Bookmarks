@@ -9,6 +9,11 @@ body {
   --menu-primary-color: white;
 }
 
+.selected {
+  stroke-width: 2px;
+  stroke: black;
+}
+
 h1.icon {
   margin: 0px;
   height: 37px;
