@@ -11,8 +11,35 @@
   </head>
   <body>
     <div id = "menuHeader" style = "height: 80px;">
-      <img class = "icon" src = "https://cdn.iconscout.com/icon/free/png-512/settings-410-461751.png"
-          onclick = "menuClick('settings');" />
+      <svg class = "icon" onclick = "menuClick('settings');">
+          <path d = "M 37.5 0
+            Q 75 0 75 37.5
+            Q 75 75 37.5 75
+            Q 0 75 0 37.5
+            Q 0 0 37.5 0
+            Z" fill = "var(--menu-bg-color)" />
+          <circle cx = "37.5" cy = "37.5" r = "8" stroke-width = "4" stroke = "var(--menu-primary-color)" fill = "none" />
+        <path id = "gear-icon" stroke-width = "4" stroke = "var(--menu-primary-color)" fill = "none" transform = "translate(37.5, 37.5)" />
+        <script>
+          let gear = document.getElementById("gear-icon");
+          let points = [];
+          for (let i = 0; i < 6; i++) {
+            let angle = i * Math.PI / 3;
+            points.push(`${Math.sin(angle) * 26} ${Math.cos(angle) * 26}`);
+            angle += Math.PI / 18;
+            points.push(`${Math.sin(angle) * 26} ${Math.cos(angle) * 26}`);
+            angle += Math.PI / 18;
+            points.push(`${Math.sin(angle) * 18} ${Math.cos(angle) * 18}`);
+            angle += Math.PI / 18;
+            points.push(`${Math.sin(angle) * 18} ${Math.cos(angle) * 18}`);
+            angle += Math.PI / 18;
+            points.push(`${Math.sin(angle) * 18} ${Math.cos(angle) * 18}`);
+            angle += Math.PI / 18;
+            points.push(`${Math.sin(angle) * 26} ${Math.cos(angle) * 26}`);
+          }
+          gear.setAttribute("d", `M ${points.join()} Z`);
+        </script>
+      </svg>
       <span id = "menuOptions" hidden>
         <svg class = "icon" onclick = "menuClick('add');">
           <path id = "add-icon"

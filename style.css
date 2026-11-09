@@ -5,7 +5,7 @@ body {
 *:not(h1).icon {
   height: 75px;
   width: 75px;
-  --menu-bg-color: cyan;
+  --menu-bg-color: #992211;
   --menu-primary-color: white;
 }
 
